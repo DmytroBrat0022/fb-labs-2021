@@ -1,6 +1,6 @@
 import math
 
-file = open('F:\\GitHub\\fb-labs-2021\\cp_1\\text.txt', encoding='utf-8')
+file = open('F:\\GitHub\\fb-labs-2021\\cp_1\\Bratunets_fb-91_cp1\\text.txt', encoding='utf-8')
 
 characters = 0;
 
@@ -10,7 +10,7 @@ for line in file:
 print(characters)
 file.close
 
-file = open('F:\\GitHub\\fb-labs-2021\\cp_1\\text.txt', encoding='utf-8')
+file = open('F:\\GitHub\\fb-labs-2021\\cp_1\\Bratunets_fb-91_cp1\\text.txt', encoding='utf-8')
 
 text = file.read()
 def count_frequency_with_spaces(characters):
@@ -88,7 +88,25 @@ def count_frequency_without_spaces(text):
 
 
 amountofbigrmswithspace = 470789
-amountofbigrmswithoutspaces = 550584
+amountofbigrmswithoutspaces = 569212
+def amountofbigrmswithoutspaces(text):
+	newtext = text.replace(" ", "")
+	alphabet_sm = ['а','б','в','г','д','е','ж','з','и','й','к','л','м','н','о','п','р','с','т','у','ф','х','ц','ч','ш','щ','ы','ь','э','ю','я']
+	alphabet_bg = ['А','Б','В','Г','Д','Е','Ж','З','И','Й','К','Л','М','Н','О','П','Р','С','Т','У','Ф','Х','Ц','Ч','Ш','Щ','Ы','Ь','Э','Ю','Я']
+
+	newtext = text.replace(" ", "")
+	i=0
+	j=0
+	Sum=0
+	while i<31:
+		while j<31:
+			amount = newtext.count(alphabet_sm[i]+alphabet_sm[j])+newtext.count(alphabet_bg[i]+alphabet_bg[j])+newtext.count(alphabet_bg[i]+alphabet_sm[j])+newtext.count(alphabet_sm[i]+alphabet_bg[j])
+			Sum+=amount
+			j+=1
+			amount=0
+		j=0
+		i+=1
+	return Sum
 
 def count_bigrams_with_spaces(text):
 	alphabet_sm = ['а','б','в','г','д','е','ж','з','и','й','к','л','м','н','о','п','р','с','т','у','ф','х','ц','ч','ш','щ','ы','ь','э','ю','я']
@@ -100,7 +118,7 @@ def count_bigrams_with_spaces(text):
 	for characters in text:
 		while i<31:
 			while j<31:
-				amount = text.count(alphabet_sm[i]+alphabet_sm[j])+text.count(alphabet_bg[i]+alphabet_bg[j])
+				amount = text.count(alphabet_sm[i]+alphabet_sm[j])+text.count(alphabet_bg[i]+alphabet_bg[j])+text.count(alphabet_bg[i]+alphabet_sm[j])+text.count(alphabet_sm[i]+alphabet_bg[j])
 				print(alphabet_bg[i]+alphabet_bg[j])
 				print(round((amount/amountofbigrmswithspace), 7))
 				j+=1
@@ -110,16 +128,16 @@ def count_bigrams_with_spaces(text):
 			i+=1
 
 def count_bigrams_without_spaces(text):
-		alphabet_sm = ['а','б','в','г','д','е','ж','з','и','й','к','л','м','н','о','п','р','с','т','у','ф','х','ц','ч','ш','щ','ы','ь','э','ю','я']
+	alphabet_sm = ['а','б','в','г','д','е','ж','з','и','й','к','л','м','н','о','п','р','с','т','у','ф','х','ц','ч','ш','щ','ы','ь','э','ю','я']
 	alphabet_bg = ['А','Б','В','Г','Д','Е','Ж','З','И','Й','К','Л','М','Н','О','П','Р','С','Т','У','Ф','Х','Ц','Ч','Ш','Щ','Ы','Ь','Э','Ю','Я']
-
+	newtext = text.replace(" ", "")
 	i=0
 	j=0
 	amount = 0
 	for characters in text:
 		while i<31:
 			while j<31:
-				amount = text.count(alphabet_sm[i]+alphabet_sm[j])+text.count(alphabet_bg[i]+alphabet_bg[j])
+				amount = newtext.count(alphabet_sm[i]+alphabet_sm[j])+newtext.count(alphabet_bg[i]+alphabet_bg[j])+newtext.count(alphabet_bg[i]+alphabet_sm[j])+newtext.count(alphabet_sm[i]+alphabet_bg[j])
 				print(alphabet_bg[i]+alphabet_bg[j])
 				print(round((amount/amountofbigrmswithoutspaces), 7))
 				j+=1
@@ -145,10 +163,11 @@ def H1_without_spacebars(text):
 	alphabet_bg = ['А','Б','В','Г','Д','Е','Ж','З','И','Й','К','Л','М','Н','О','П','Р','С','Т','У','Ф','Х','Ц','Ч','Ш','Щ','Ы','Ь','Э','Ю','Я']
 
 	textwoutspaces = count_letters(text)
+	newtext = text.replace(" ", "")
 	Sum = 0
 	i = 0
 	while i<31:
-		P = ((text.count(alphabet_sm[i]) + text.count(alphabet_bg[i]))/textwoutspaces)
+		P = ((newtext.count(alphabet_sm[i]) + newtext.count(alphabet_bg[i]))/textwoutspaces)
 		Sum += P * math.log2(P)
 		i += 1
 	print("H1:%1f"%(-Sum))
@@ -179,6 +198,7 @@ def H2_without_spacebars(text):
 	alphabet_sm = ['а','б','в','г','д','е','ж','з','и','й','к','л','м','н','о','п','р','с','т','у','ф','х','ц','ч','ш','щ','ы','ь','э','ю','я']
 	alphabet_bg = ['А','Б','В','Г','Д','Е','Ж','З','И','Й','К','Л','М','Н','О','П','Р','С','Т','У','Ф','Х','Ц','Ч','Ш','Щ','Ы','Ь','Э','Ю','Я']
 
+	newtext = text.replace(" ", "")
 	Sum = 0
 	i=0
 	j=0
@@ -186,7 +206,7 @@ def H2_without_spacebars(text):
 	amount = 0
 	while i<31:
 		while j<31:
-			amount = text.count(alphabet_sm[i]+alphabet_sm[j])+text.count(alphabet_bg[i]+alphabet_bg[j])
+			amount = newtext.count(alphabet_sm[i]+alphabet_sm[j])+newtext.count(alphabet_bg[i]+alphabet_bg[j])
 			P = amount/amountofbigrmswithoutspaces
 			if P!=0:
 				Sum += P * math.log2(P)
@@ -197,17 +217,19 @@ def H2_without_spacebars(text):
 		i+=1
 	print("H2:%1f"%(-Sum/2))
 
-count_frequency_with_spaces(characters)
-count_frequency_without_spaces(text)
+#count_frequency_with_spaces(characters)
+#count_frequency_without_spaces(text)
 
-count_bigrams_without_spaces(text)
-count_bigrams_with_spaces(text)
+#count_bigrams_without_spaces(text)
+#count_bigrams_with_spaces(text)
 
-H1_with_spacebars(text)
-H2_with_spacebars(text)
+#H1_with_spacebars(text)
+#H2_with_spacebars(text)
 
-H1_without_spacebars(text)
-H2_without_spacebars(text)
+#H1_without_spacebars(text)
+#H2_without_spacebars(text)
+
+print(amountofbigrmswithoutspaces(text))
 
 
 
