@@ -1,106 +1,52 @@
 import math
+import re
 
 file = open('F:\\GitHub\\fb-labs-2021\\cp_1\\Bratunets_fb-91_cp1\\text.txt', encoding='utf-8')
 
-characters = 0;
+alphabet_sm = ['а','б','в','г','д','е','ж','з','и','й','к','л','м','н','о','п','р','с','т','у','ф','х','ц','ч','ш','щ','ы','ь','э','ю','я']
 
-for line in file:
-        wordslist=line.split()
-        characters += sum(len(word) for word in wordslist)
-print(characters)
-file.close
+rawtext = file.read()
+rawtext = rawtext.lower()
+text = re.sub("[”|„|&|$|“|>|+|/|<| |,|.|!|?|-|-|‒|—|;|:|–|-|»|«|-|*|1|2|3|4|5|6|7|8|9|0|#|…|(|)|-|'|№|a|b|c|d|e|f|g|h|i|j|k|l|m|n|o|p|q|r|s|t|u|v|w|x|y|z]", " ", rawtext)
+# text = re.sub("^\s+|\n|\r|\s+$", '', text)
+text = re.sub(r'\s+', ' ', text)
+text = re.sub(r'[a-z]', ' ', text)
+text = text.lower()
+text = text.replace("ё", "е")
+text = text.replace("ъ", "ь")
+characters = len(text)
 
-file = open('F:\\GitHub\\fb-labs-2021\\cp_1\\Bratunets_fb-91_cp1\\text.txt', encoding='utf-8')
+file2 = open('text2.txt', 'w')
+file2.write(text)
 
-text = file.read()
-def count_frequency_with_spaces(characters):
-	print((text.count("а")+text.count("А"))/characters)
-	print((text.count("б")+text.count("Б"))/characters)
-	print((text.count("в")+text.count("В"))/characters)
-	print((text.count("г")+text.count("Г"))/characters)
-	print((text.count("д")+text.count("Д"))/characters)
-	print((text.count("е")+text.count("Е"))/characters)
-	print((text.count("ж")+text.count("Ж"))/characters)
-	print((text.count("з")+text.count("З"))/characters)
-	print((text.count("и")+text.count("И"))/characters)
-	print((text.count("й")+text.count("Й"))/characters)
-	print((text.count("к")+text.count("К"))/characters)
-	print((text.count("л")+text.count("Л"))/characters)
-	print((text.count("м")+text.count("М"))/characters)
-	print((text.count("н")+text.count("Н"))/characters)
-	print((text.count("о")+text.count("О"))/characters)
-	print((text.count("п")+text.count("П"))/characters)
-	print((text.count("р")+text.count("Р"))/characters)
-	print((text.count("с")+text.count("С"))/characters)
-	print((text.count("т")+text.count("Т"))/characters)
-	print((text.count("у")+text.count("У"))/characters)
-	print((text.count("ф")+text.count("Ф"))/characters)
-	print((text.count("х")+text.count("Х"))/characters)
-	print((text.count("ц")+text.count("Ц"))/characters)
-	print((text.count("ч")+text.count("Ч"))/characters)
-	print((text.count("ш")+text.count("Ш"))/characters)
-	print((text.count("щ")+text.count("Щ"))/characters)
-	print((text.count("ы")+text.count("Ы"))/characters)
-	print((text.count("ь")+text.count("Ь"))/characters)
-	print((text.count("э")+text.count("Э"))/characters)
-	print((text.count("ю")+text.count("Ю"))/characters)
-	print((text.count("я")+text.count("Я"))/characters)
+textwoutspaces = text.replace(" ", "")
+lentextwoutspaces = len(textwoutspaces)
+
+file3 = open('text3.txt', 'w')
+file3.write(textwoutspaces)
+
+def count_frequency_with_spaces():
+	i=0
+	while i<31:
+		print(text.count(alphabet_sm[i])/characters)
+		i+=1
 	print((text.count(" "))/characters)
 
-def count_letters(word):
-    return characters - word.count(' ')
-def count_frequency_without_spaces(text):
-	textwoutspaces = count_letters(text)
-
-	#print(textwoutspaces)
-
-	print((text.count("а")+text.count("А"))/textwoutspaces)
-	print((text.count("б")+text.count("Б"))/textwoutspaces)
-	print((text.count("в")+text.count("В"))/textwoutspaces)
-	print((text.count("г")+text.count("Г"))/textwoutspaces)
-	print((text.count("д")+text.count("Д"))/textwoutspaces)
-	print((text.count("е")+text.count("Е"))/textwoutspaces)
-	print((text.count("ж")+text.count("Ж"))/textwoutspaces)
-	print((text.count("з")+text.count("З"))/textwoutspaces)
-	print((text.count("и")+text.count("И"))/textwoutspaces)
-	print((text.count("й")+text.count("Й"))/textwoutspaces)
-	print((text.count("к")+text.count("К"))/textwoutspaces)
-	print((text.count("л")+text.count("Л"))/textwoutspaces)
-	print((text.count("м")+text.count("М"))/textwoutspaces)
-	print((text.count("н")+text.count("Н"))/textwoutspaces)
-	print((text.count("о")+text.count("О"))/textwoutspaces)
-	print((text.count("п")+text.count("П"))/textwoutspaces)
-	print((text.count("р")+text.count("Р"))/textwoutspaces)
-	print((text.count("с")+text.count("С"))/textwoutspaces)
-	print((text.count("т")+text.count("Т"))/textwoutspaces)
-	print((text.count("у")+text.count("У"))/textwoutspaces)
-	print((text.count("ф")+text.count("Ф"))/textwoutspaces)
-	print((text.count("х")+text.count("Х"))/textwoutspaces)
-	print((text.count("ц")+text.count("Ц"))/textwoutspaces)
-	print((text.count("ч")+text.count("Ч"))/textwoutspaces)
-	print((text.count("ш")+text.count("Ш"))/textwoutspaces)
-	print((text.count("щ")+text.count("Щ"))/textwoutspaces)
-	print((text.count("ы")+text.count("Ы"))/textwoutspaces)
-	print((text.count("ь")+text.count("Ь"))/textwoutspaces)
-	print((text.count("э")+text.count("Э"))/textwoutspaces)
-	print((text.count("ю")+text.count("Ю"))/textwoutspaces)
-	print((text.count("я")+text.count("Я"))/textwoutspaces)
+def count_frequency_without_spaces():
 
 
-amountofbigrmswithspace = 470789
-amountofbigrmswithoutspaces = 569212
-def amountofbigrmswithoutspaces(text):
-	newtext = text.replace(" ", "")
-	alphabet_sm = ['а','б','в','г','д','е','ж','з','и','й','к','л','м','н','о','п','р','с','т','у','ф','х','ц','ч','ш','щ','ы','ь','э','ю','я']
-	alphabet_bg = ['А','Б','В','Г','Д','Е','Ж','З','И','Й','К','Л','М','Н','О','П','Р','С','Т','У','Ф','Х','Ц','Ч','Ш','Щ','Ы','Ь','Э','Ю','Я']
+	i=0
+	while i<31:
+		print(textwoutspaces.count(alphabet_sm[i])/lentextwoutspaces)
+		i+=1
 
-	newtext = text.replace(" ", "")
+def amountofbigrmswithoutspaces():
 	i=0
 	j=0
 	Sum=0
 	while i<31:
 		while j<31:
-			amount = newtext.count(alphabet_sm[i]+alphabet_sm[j])+newtext.count(alphabet_bg[i]+alphabet_bg[j])+newtext.count(alphabet_bg[i]+alphabet_sm[j])+newtext.count(alphabet_sm[i]+alphabet_bg[j])
+			amount = textwoutspaces.count(alphabet_sm[i]+alphabet_sm[j])
 			Sum+=amount
 			j+=1
 			amount=0
@@ -108,73 +54,75 @@ def amountofbigrmswithoutspaces(text):
 		i+=1
 	return Sum
 
-def count_bigrams_with_spaces(text):
-	alphabet_sm = ['а','б','в','г','д','е','ж','з','и','й','к','л','м','н','о','п','р','с','т','у','ф','х','ц','ч','ш','щ','ы','ь','э','ю','я']
-	alphabet_bg = ['А','Б','В','Г','Д','Е','Ж','З','И','Й','К','Л','М','Н','О','П','Р','С','Т','У','Ф','Х','Ц','Ч','Ш','Щ','Ы','Ь','Э','Ю','Я']
+def amountofbigrmswithspace():
+	i=0
+	j=0
+	Sum=0
+	while i<31:
+		while j<31:
+			amount = text.count(alphabet_sm[i]+alphabet_sm[j])
+			Sum+=amount
+			j+=1
+			amount=0
+		j=0
+		i+=1
+	return Sum
 
+amountofbigrmswithspace = amountofbigrmswithspace()
+amountofbigrmswithoutspaces = amountofbigrmswithoutspaces()
+
+def count_bigrams_with_spaces():
+	
 	i=0
 	j=0
 	amount = 0
-	for characters in text:
-		while i<31:
-			while j<31:
-				amount = text.count(alphabet_sm[i]+alphabet_sm[j])+text.count(alphabet_bg[i]+alphabet_bg[j])+text.count(alphabet_bg[i]+alphabet_sm[j])+text.count(alphabet_sm[i]+alphabet_bg[j])
-				print(alphabet_bg[i]+alphabet_bg[j])
-				print(round((amount/amountofbigrmswithspace), 7))
-				j+=1
-				amount=0
+	while i<31:
+		while j<31:
+			amount = text.count(alphabet_sm[i]+alphabet_sm[j])
+			print(round((amount/amountofbigrmswithspace), 7))
+			j+=1
+			amount=0
 
-			j=0
-			i+=1
+		j=0
+		i+=1
 
-def count_bigrams_without_spaces(text):
-	alphabet_sm = ['а','б','в','г','д','е','ж','з','и','й','к','л','м','н','о','п','р','с','т','у','ф','х','ц','ч','ш','щ','ы','ь','э','ю','я']
-	alphabet_bg = ['А','Б','В','Г','Д','Е','Ж','З','И','Й','К','Л','М','Н','О','П','Р','С','Т','У','Ф','Х','Ц','Ч','Ш','Щ','Ы','Ь','Э','Ю','Я']
-	newtext = text.replace(" ", "")
+def count_bigrams_without_spaces():
 	i=0
 	j=0
 	amount = 0
-	for characters in text:
-		while i<31:
-			while j<31:
-				amount = newtext.count(alphabet_sm[i]+alphabet_sm[j])+newtext.count(alphabet_bg[i]+alphabet_bg[j])+newtext.count(alphabet_bg[i]+alphabet_sm[j])+newtext.count(alphabet_sm[i]+alphabet_bg[j])
-				print(alphabet_bg[i]+alphabet_bg[j])
-				print(round((amount/amountofbigrmswithoutspaces), 7))
-				j+=1
-				amount=0
-			j=0
-			i+=1
+	while i<31:
+		while j<31:
+			amount = textwoutspaces.count(alphabet_sm[i]+alphabet_sm[j])
+			print(round((amount/amountofbigrmswithoutspaces), 7))
+			j+=1
+			amount=0
+		j=0
+		i+=1
 
-def H1_with_spacebars(text):
-	alphabet_sm = ['а','б','в','г','д','е','ж','з','и','й','к','л','м','н','о','п','р','с','т','у','ф','х','ц','ч','ш','щ','ы','ь','э','ю','я']
-	alphabet_bg = ['А','Б','В','Г','Д','Е','Ж','З','И','Й','К','Л','М','Н','О','П','Р','С','Т','У','Ф','Х','Ц','Ч','Ш','Щ','Ы','Ь','Э','Ю','Я']
+def H1_with_spacebars():
 
 	Sum = 0
 	i = 0
 	while i<31:
-		P = ((text.count(alphabet_sm[i]) + text.count(alphabet_bg[i]))/characters)
+		P = text.count(alphabet_sm[i])/characters
 		Sum += P * math.log2(P)
 		i += 1
-	print("H1:%1f"%(-Sum))
+	P = text.count(" ")/characters
+	Sum += P * math.log2(P)
+	print("H1 with spaces:%1f"%(-Sum))
 
 
-def H1_without_spacebars(text):
-	alphabet_sm = ['а','б','в','г','д','е','ж','з','и','й','к','л','м','н','о','п','р','с','т','у','ф','х','ц','ч','ш','щ','ы','ь','э','ю','я']
-	alphabet_bg = ['А','Б','В','Г','Д','Е','Ж','З','И','Й','К','Л','М','Н','О','П','Р','С','Т','У','Ф','Х','Ц','Ч','Ш','Щ','Ы','Ь','Э','Ю','Я']
+def H1_without_spacebars():
 
-	textwoutspaces = count_letters(text)
-	newtext = text.replace(" ", "")
 	Sum = 0
 	i = 0
 	while i<31:
-		P = ((newtext.count(alphabet_sm[i]) + newtext.count(alphabet_bg[i]))/textwoutspaces)
+		P = textwoutspaces.count(alphabet_sm[i])/lentextwoutspaces
 		Sum += P * math.log2(P)
 		i += 1
-	print("H1:%1f"%(-Sum))
+	print("H1 without spaces:%1f"%(-Sum))
 
-def H2_with_spacebars(text):
-	alphabet_sm = ['а','б','в','г','д','е','ж','з','и','й','к','л','м','н','о','п','р','с','т','у','ф','х','ц','ч','ш','щ','ы','ь','э','ю','я']
-	alphabet_bg = ['А','Б','В','Г','Д','Е','Ж','З','И','Й','К','Л','М','Н','О','П','Р','С','Т','У','Ф','Х','Ц','Ч','Ш','Щ','Ы','Ь','Э','Ю','Я']
+def H2_with_spacebars():
 
 	Sum = 0
 	i=0
@@ -183,7 +131,7 @@ def H2_with_spacebars(text):
 	amount = 0
 	while i<31:
 		while j<31:
-			amount = text.count(alphabet_sm[i]+alphabet_sm[j])+text.count(alphabet_bg[i]+alphabet_bg[j])
+			amount = text.count(alphabet_sm[i]+alphabet_sm[j])
 			P = amount/amountofbigrmswithspace
 			if P!=0:
 				Sum += P * math.log2(P)
@@ -192,13 +140,9 @@ def H2_with_spacebars(text):
 
 		j=0
 		i+=1
-	print("H2:%1f"%(-Sum/2))
+	print("H2 with spaces:%1f"%(-Sum/2))
 
-def H2_without_spacebars(text):
-	alphabet_sm = ['а','б','в','г','д','е','ж','з','и','й','к','л','м','н','о','п','р','с','т','у','ф','х','ц','ч','ш','щ','ы','ь','э','ю','я']
-	alphabet_bg = ['А','Б','В','Г','Д','Е','Ж','З','И','Й','К','Л','М','Н','О','П','Р','С','Т','У','Ф','Х','Ц','Ч','Ш','Щ','Ы','Ь','Э','Ю','Я']
-
-	newtext = text.replace(" ", "")
+def H2_without_spacebars():
 	Sum = 0
 	i=0
 	j=0
@@ -206,7 +150,7 @@ def H2_without_spacebars(text):
 	amount = 0
 	while i<31:
 		while j<31:
-			amount = newtext.count(alphabet_sm[i]+alphabet_sm[j])+newtext.count(alphabet_bg[i]+alphabet_bg[j])
+			amount = textwoutspaces.count(alphabet_sm[i]+alphabet_sm[j])
 			P = amount/amountofbigrmswithoutspaces
 			if P!=0:
 				Sum += P * math.log2(P)
@@ -215,22 +159,107 @@ def H2_without_spacebars(text):
 
 		j=0
 		i+=1
-	print("H2:%1f"%(-Sum/2))
+	print("H2 without spaces:%1f"%(-Sum/2))
 
-#count_frequency_with_spaces(characters)
-#count_frequency_without_spaces(text)
+def bigramSTEP2_frequency_with_spacebars():
+	res = 0
+	d = {}
+	ind =0 
+	j=0
+	while ind<31:
+	 	while j<31:
+	 		d[alphabet_sm[ind]+alphabet_sm[j]]=0
+	 		j+=1
+	 	ind+=1
+	 	j=0
+	bigram = ""
+	i = 0
+	count = 0
+	length = len(text)
+	while i<length:
+		if text[i]==" " or text[i+1]==" ":
+			i+=2
+		else:
+			bigram = (text[i]+text[i+1])
+			d[bigram] += 1
+			i+=2
+	res = sum(d.values())
 
-#count_bigrams_without_spaces(text)
-#count_bigrams_with_spaces(text)
+	# print(d)
+	# print(res)
+	for bigram in d:
+		d[bigram] = float(d[bigram]/res)
+	list_keys = list(d.keys())
+	list_keys.sort()
+	# for i in list_keys:
+	# 	print(i)
+	# for i in list_keys:
+	# 	print(d[i])
+	Sum = 0
+	for bigram in d:
+		if d[bigram]!=0:
+			Sum += (d[bigram])*math.log2(d[bigram])
+	print("H2Step2 with spaces:%1f"%(-Sum/2))
 
-#H1_with_spacebars(text)
-#H2_with_spacebars(text)
 
-#H1_without_spacebars(text)
-#H2_without_spacebars(text)
+def bigramSTEP2_frequency_without_spacebars():
+	res = 0
+	d = {}
+	ind =0 
+	j=0
+	while ind<31:
+	 	while j<31:
+	 		d[alphabet_sm[ind]+alphabet_sm[j]]=0
+	 		j+=1
+	 	ind+=1
+	 	j=0
+	bigram = ""
+	i = 0
+	count = 0
+	length = len(textwoutspaces)
+	while i<length-1:
+		bigram = (textwoutspaces[i]+textwoutspaces[i+1])
+		d[bigram] += 1
+		i+=2
+	res = sum(d.values())
 
-print(amountofbigrmswithoutspaces(text))
+	# print(d)
+	# print(res)
+	for bigram in d:
+		d[bigram] = float(d[bigram]/res)
+	list_keys = list(d.keys())
+	list_keys.sort()
+	# for i in list_keys:
+	# 	print(i)
+	# for i in list_keys:
+	# 	print(d[i])
+
+	Sum = 0
+	for bigram in d:
+		if d[bigram]!=0:
+			Sum += (d[bigram])*math.log2(d[bigram])
+	print("H2Step2 without spaces:%1f"%(-Sum/2))
 
 
+count_frequency_with_spaces()
+count_frequency_without_spaces()
 
+# count_bigrams_without_spaces()
+# count_bigrams_with_spaces()
 
+H1_with_spacebars()
+H2_with_spacebars()
+
+H1_without_spacebars()
+H2_without_spacebars()
+
+# print(characters)
+# print(lentextwoutspaces)
+
+# d = dict().fromkeys(set(text))
+# for k in d.keys():
+#     d[k] = text.count(k)
+#     print(k, d[k])
+
+bigramSTEP2_frequency_with_spacebars()
+bigramSTEP2_frequency_without_spacebars()
