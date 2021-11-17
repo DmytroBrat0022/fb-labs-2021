@@ -1,10 +1,14 @@
 import re
-file = open('F:\\GitHub\\fb-labs-2021\\cp_2\\Bratunets_fb91_cp2\\text.txt', encoding='utf-8')
+file = open('F:\\GitHub\\fb-labs-2021\\cp_2\\Bratunets_fb-91_cp2\\text.txt', encoding='utf-8')
 alphabet = ['а','б','в','г','д','е','ж','з','и','й','к','л','м','н','о','п','р','с','т','у','ф','х','ц','ч','ш','щ','ъ','ы','ь','э','ю','я']
 
 rawtext = file.read()
-text = re.sub("[ |,|.|!|?|-|‒|—|;|:|–|-|»|«|-]", "", rawtext)
+rawtext = rawtext.lower()
+text = re.sub("[”|„|&|$|“|>|+|/|<| |,|.|!|?|-|-|‒|—|;|:|–|-|»|«|-|*|1|2|3|4|5|6|7|8|9|0|#|…|(|)|-|'|№|a|b|c|d|e|f|g|h|i|j|k|l|m|n|o|p|q|r|s|t|u|v|w|x|y|z|" "]", "", rawtext)
 #text1.find("ё")
+text = re.sub(r'\s+', ' ', text)
+text = re.sub(r'[a-z]', ' ', text)
+text = text.replace("ё", "е")
 #text = text1.replace("ё", "е")
 text = text.lower()
 print(text)
@@ -17,7 +21,7 @@ def EncodeNum(text):
 	j=0
 	list_encodenum = []
 	while i<characters:
-		while j<32:
+		while j<len(alphabet):
 			if text[i] == alphabet[j]:
 				list_encodenum.append(j)
 			j+=1
@@ -32,7 +36,7 @@ def VizinerEncodeNum(value, key):
 	lenk = len(key)
 	list_VizEnc = []
 	while i < lenv:
-		index = (value[i]+key[(j%lenk)])%32
+		index = (value[i]+key[(j%lenk)])%len(alphabet)
 		list_VizEnc.append(index)
 		j+=1
 		i+=1
@@ -64,7 +68,7 @@ def IndexConform(text):
 	amount=0
 	Index=0
 	Sum=0
-	while i<32:
+	while i<len(alphabet):
 		amount = text.count(alphabet[i])
 		Sum+= amount*(amount-1)
 		i+=1
