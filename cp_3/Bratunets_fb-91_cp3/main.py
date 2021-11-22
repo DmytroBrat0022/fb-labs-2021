@@ -89,8 +89,8 @@ def bigramSTEP2_popular(text):
     d = {}
     ind =0 
     j=0
-    while ind<31:
-        while j<31:
+    while ind<len(alphabet):
+        while j<len(alphabet):
             d[alphabet[ind]+alphabet[j]]=0
             j+=1
         ind+=1
@@ -201,7 +201,6 @@ def Decrypter(text, a, b):
         X = ((text[i]-b)*a_reverse)%alph
         x2 = int(X%len(alphabet))
         x1 = int((X - x2)/len(alphabet))
-
         newtext+=alphabet[x1]
         newtext+=alphabet[x2]
         i+=1
@@ -218,7 +217,8 @@ def check_text(text):
     return True
 
 
-all_keys = FindKeys((EncodeNum(popular_bigrams)),EncodeNum(bigramSTEP2_popular(text)))
+all_keys = FindKeys((EncodeNum(popular_bigrams)),EncodeNum(bigramSTEP2_popular(text))) 
+print(EncodeNum(popular_bigrams))
 list1 = EncodeNum(text)
 file4 = open('decrypted.txt', 'w')
 
