@@ -5,7 +5,7 @@ popular_bigrams = ['ст','но','то','на','ен']
 
 
 file = open('02.txt', encoding='utf-8')
-alphabet = ['а','б','в','г','д','е','ж','з','и','й','к','л','м','н','о','п','р','с','т','у','ф','х','ц','ч','ш','щ','ы','ь','э','ю','я']
+alphabet = ['а','б','в','г','д','е','ж','з','и','й','к','л','м','н','о','п','р','с','т','у','ф','х','ц','ч','ш','щ','ь','ы','э','ю','я']
 
 text = file.read()
 text = re.sub(r'\s+', ' ', text)
@@ -14,21 +14,21 @@ text = re.sub(" ", "", text)
 file5 = open('text123.txt', 'w')
 file5.write(text)
 
-file2 = open('text.txt', encoding='utf-8')
+# file2 = open('text.txt', encoding='utf-8')
 
-rawtext = file2.read()
-rawtext = rawtext.lower()
-text2 = re.sub("[”|„|&|$|“|>|+|/|<| |,|.|!|?|-|-|‒|—|;|:|–|-|»|«|-|*|1|2|3|4|5|6|7|8|9|0|#|…|(|)|-|'|№|a|b|c|d|e|f|g|h|i|j|k|l|m|n|o|p|q|r|s|t|u|v|w|x|y|z]", " ", rawtext)
-# text = re.sub("^\s+|\n|\r|\s+$", '', text)
-text2 = re.sub(r'\s+', ' ', text2)
-text2 = re.sub(r'[a-z]', ' ', text2)
-text2 = text2.lower()
-text2 = text2.replace("ё", "е")
-text2 = text2.replace("ъ", "ь")
-text2= text2.replace(" ", "")
+# rawtext = file2.read()
+# rawtext = rawtext.lower()
+# text2 = re.sub("[”|„|&|$|“|>|+|/|<| |,|.|!|?|-|-|‒|—|;|:|–|-|»|«|-|*|1|2|3|4|5|6|7|8|9|0|#|…|(|)|-|'|№|a|b|c|d|e|f|g|h|i|j|k|l|m|n|o|p|q|r|s|t|u|v|w|x|y|z]", " ", rawtext)
+# # text = re.sub("^\s+|\n|\r|\s+$", '', text)
+# text2 = re.sub(r'\s+', ' ', text2)
+# text2 = re.sub(r'[a-z]', ' ', text2)
+# text2 = text2.lower()
+# text2 = text2.replace("ё", "е")
+# text2 = text2.replace("ъ", "ь")
+# text2= text2.replace(" ", "")
 
-file3 = open('text2.txt', 'w')
-file3.write(text2)
+# file3 = open('text2.txt', 'w')
+# file3.write(text2)
 
 # def gcd(num1, num2, q=None):
 #     if q is None:
@@ -119,7 +119,7 @@ def bigramSTEP2_popular(text):
 
 print(bigramSTEP2_popular(text))
 
-print(bigramSTEP2_popular(text2))
+#print(bigramSTEP2_popular(text2))
 
 def EncodeNum(bigrams):
     i=0
