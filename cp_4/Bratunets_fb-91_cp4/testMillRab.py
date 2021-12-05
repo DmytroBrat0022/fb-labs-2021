@@ -36,8 +36,6 @@ def test_miller_rabin(p,k):
 					return False
 		return True
 
-
-
 def rozklad(p):
 	counter = p-1
 	s=0
@@ -47,43 +45,132 @@ def rozklad(p):
 	d = int(counter)
 	return(d,s)
 
-def gcd(a, b):
-    r = a % b
-    q = (a - r) / b
-    if r == 0:
-        return b
-    else:
-        return gcd(b, r)
-
-# for n in range(1,100):
-#     if (test_miller_rabin(n, 2)):
-#         print(n , end=" ");
-
 def generate_key(size):
 	while True:
 		x = random.randrange(pow(2,size-1)+1, pow(2,size)-1)
+		print(x)
 		if test_miller_rabin(x, 4):
+			print("__________________________________")
 			return x
 
-# if test_miller_rabin(13, 4):
-# 	print("yes")
-# 	time.sleep(3)
 
-# if test_miller_rabin(452312848583266388373324160190187140051835877600158453279131187530910662655971, 4):
-# 	print("yes")
-# 	time.sleep(3)
-condition = True
-while condition:
-	for i in range(0,4):
-		q = generate_key(256)
-		p =	generate_key(256)
-		q1 = generate_key(256)
-		p1 = generate_key(256)
-		if p*q<= p1*q1:
+# condition = True
+# while condition:
+# 	for i in range(0,4):
+# 		q = generate_key(256)
+# 		p =	generate_key(256)
+# 		q1 = generate_key(256)
+# 		p1 = generate_key(256)
+# 		if p*q<= p1*q1:
+# 			condition = False
+# 			print("\n",q,"\n",p,"\n",q1,"\n",p1,"\n")
+
+q = 81994475584405935948868955911630277182389530435402539001816916720392262770879
+p = 60695060125406353645205586978113049519423657642692092700480783611828281008489
+q1 = 86321480949212574863441223330807749318502228060528766766450179206338212009411
+p1 = 81485329224126869631210665457337554019104661539455710371343449787989340245059
+
+def gcd(a, b):
+    if b == 0:  
+        return a, 1, 0
+    else:
+        d, x, y = gcd(b, a % b)
+        return d, y, x - y * (a // b)
+
+def generate_key_pair(size,p,q):
+ # 	q = generate_key(size)
+	# p =	generate_key(size)
+
+	n = p*q
+	f = (p-1)*(q-1)
+	condition = True
+	while condition:
+		e = random.randrange(2, f-1)
+		if gcd(e,f)[0]==1:
 			condition = False
-			print("\n",q,"\n",p,"\n",q1,"\n",p1,"\n")
+	d = int(gcd(e,f)[1])%f
+	secret_key = d
+	public_key = [n,e]
+	return secret_key,public_key
 
- q = 81994475584405935948868955911630277182389530435402539001816916720392262770879
- p = 60695060125406353645205586978113049519423657642692092700480783611828281008489
- q1 = 86321480949212574863441223330807749318502228060528766766450179206338212009411
- p1 = 81485329224126869631210665457337554019104661539455710371343449787989340245059
+def encrypt(m, e, n):
+	c = pow(m,e,n)
+	return c
+
+def decrypt(c, d, n):
+	m = pow(c,d,n)
+	return m
+
+def sign(m, d, n):
+	s = pow(m, d, n)
+	return s
+
+def verify(m,s,e,n):
+	if m == pow(s,e,n):
+		return True
+
+def send_key(k, e1, n1, d, n):
+	k1 = pow(k,e1,n1)
+	s = pow(k,d,n)
+	s1 = pow(s,e1,n1)
+	return k1,s1,s
+
+def receive_key(k1, s1, d, n):
+	k = pow(k1,d,n)
+	s = pow(s1,d,n)
+	return k,s
+
+
+secret_key_A, public_key_A = generate_key_pair(256, p, q)
+secret_key_B, public_key_B = generate_key_pair(256, p1, q1)
+
+print("\n","d =", secret_key_A,"\n","n =", public_key_A[0],"\n","e =", public_key_A[1],"\n","d1 =", secret_key_B,"\n", "n1 =", public_key_B[0],"\n","e1 =", public_key_B[1])
+print("\n","d =", hex(secret_key_A),"\n","n =", hex(public_key_A[0]),"\n","e =", hex(public_key_A[1]),"\n","d1 =", hex(secret_key_B),"\n", "n1 =", hex(public_key_B[0]),"\n","e1 =", hex(public_key_B[1]))
+
+k = random.randrange(1, public_key_A[0])
+print("\nk =",k)
+print("\nk =",hex(k))
+m = random.randrange(1, public_key_A[0])
+print("\nm =",m)
+print("\nm =",hex(m))
+
+c_A = encrypt(m, public_key_A[1], public_key_A[0])
+print("\nc_A=",c_A)
+print("\nc_A=",hex(c_A))
+print("\n m =",decrypt(c_A, secret_key_A, public_key_A[0]))
+print("\n m =",hex(decrypt(c_A, secret_key_A, public_key_A[0])))
+if m == decrypt(c_A, secret_key_A, public_key_A[0]):
+	print("yes")
+
+c_B = encrypt(m, public_key_B[1], public_key_B[0])
+print("\nc_B=",c_B)
+print("\nc_B=",hex(c_B))
+print("\n m =",decrypt(c_B, secret_key_B, public_key_B[0]))
+print("\n m =",hex(decrypt(c_B, secret_key_B, public_key_B[0])))
+if m == decrypt(c_B, secret_key_B, public_key_B[0]):
+	print("yes")
+
+sign_A = sign(m, secret_key_A, public_key_A[0])
+print("\nsign_A =",sign_A)
+print("\nsign_A =",hex(sign_A))
+
+if verify(m,sign_A, public_key_A[1], public_key_A[0]):
+	print("verifed")
+
+sign_B = sign(m, secret_key_B, public_key_B[0])
+print("\nsign_B =",sign_B)
+print("\nsign_B =",hex(sign_B))
+
+if verify(m,sign_B, public_key_B[1], public_key_B[0]):
+	print("verifed")
+
+k1, s1, s = send_key(k, public_key_B[1],  public_key_B[0],secret_key_A, public_key_A[0])
+print("Abonent A have send key!")
+print("k1 = ",k1)
+print("s1 = ",s1)
+print("Abonent B has received key!")
+if k == receive_key(k1,s1, secret_key_B, public_key_B[0])[0] and s == receive_key(k1,s1, secret_key_B, public_key_B[0])[1] and k == pow(s,public_key_A[1], public_key_A[0]):
+	print("Message was verifed")
+else:
+	print("Message wasn't verifed")
+
