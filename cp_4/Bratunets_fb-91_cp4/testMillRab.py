@@ -115,10 +115,15 @@ def send_key(k, e1, n1, d, n):
 	s1 = pow(s,e1,n1)
 	return k1,s1,s
 
-def receive_key(k1, s1, d, n):
-	k = pow(k1,d,n)
-	s = pow(s1,d,n)
-	return k,s
+def receive_key(k1, s1, d1, n1, s, e, n):
+	k = pow(k1,d1,n1)
+	s = pow(s1,d1,n1)
+	if k== pow(s,e,n):
+		print("Message was verified!")
+		return k,s
+	else:
+		print("Message wasn't verified!")
+		return False
 
 
 secret_key_A, public_key_A = generate_key_pair(256, p, q)
@@ -127,10 +132,10 @@ secret_key_B, public_key_B = generate_key_pair(256, p1, q1)
 print("\n","d =", secret_key_A,"\n","n =", public_key_A[0],"\n","e =", public_key_A[1],"\n","d1 =", secret_key_B,"\n", "n1 =", public_key_B[0],"\n","e1 =", public_key_B[1])
 print("\n","d =", hex(secret_key_A),"\n","n =", hex(public_key_A[0]),"\n","e =", hex(public_key_A[1]),"\n","d1 =", hex(secret_key_B),"\n", "n1 =", hex(public_key_B[0]),"\n","e1 =", hex(public_key_B[1]))
 
-k = random.randrange(1, public_key_A[0])
+k = random.randrange(1, public_key_A[0]-1)
 print("\nk =",k)
 print("\nk =",hex(k))
-m = random.randrange(1, public_key_A[0])
+m = random.randrange(1, public_key_A[0]-1)
 print("\nm =",m)
 print("\nm =",hex(m))
 
@@ -169,8 +174,13 @@ print("Abonent A have send key!")
 print("k1 = ",k1)
 print("s1 = ",s1)
 print("Abonent B has received key!")
-if k == receive_key(k1,s1, secret_key_B, public_key_B[0])[0] and s == receive_key(k1,s1, secret_key_B, public_key_B[0])[1] and k == pow(s,public_key_A[1], public_key_A[0]):
-	print("Message was verifed")
-else:
-	print("Message wasn't verifed")
 
+receive_key(k1,s1, secret_key_B, public_key_B[0], s, public_key_A[1], public_key_A[0])
+
+
+
+k1, s1, s = send_key(k, int("10001", 16), int("AAE0EA1CF0CDE4B9D6B1E3F52514E33A28168C86557B14C36ACE527EC3851D7BEDD1FEC6130725F232CABC2ED06B5D73CF9ED3931564AF4E28C399CEA0779071", 16),secret_key_A, public_key_A[0])
+
+print("k1 = ",hex(k1))
+print("s1 = ",hex(s1))
+print("s = ",hex(s))
